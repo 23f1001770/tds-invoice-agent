@@ -1,0 +1,4 @@
+.env
+main copy.py
+__pycache__/
+.venv/
