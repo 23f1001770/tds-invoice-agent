@@ -143,10 +143,16 @@ def check_version_and_media_type(
 ) -> Optional[JSONResponse]:
     if not a2a_version or a2a_version.strip() != "1.0":
         return error_response(400, "UNSUPPORTED_VERSION", "A2A-Version: 1.0 is required.")
+        
     if require_body_media_type:
         ct = (content_type or "").lower()
-        if "application/a2a+json" not in ct and "application/json" not in ct:
-            return error_response(400, "UNSUPPORTED_MEDIA_TYPE", "Expected application/a2a+json.")
+        media_type = ct.split(";", 1)[0].strip()
+        if media_type != "application/a2a+json":
+            return error_response(
+                415,
+                "UNSUPPORTED_MEDIA_TYPE",
+                "Expected application/a2a+json.",
+            )
     return None
 
 
