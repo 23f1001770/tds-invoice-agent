@@ -20,7 +20,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL", "").strip()
 DB_PATH = os.getenv("DB_PATH", "a2a_state.db")
-
+A2A_AUTH_TOKEN = os.getenv("A2A_AUTH_TOKEN", "")
 A2A_MEDIA_TYPE = "application/a2a+json"
 INPUT_MODE_BATCH = "application/vnd.ga5.invoice-claim-batch+json"
 INPUT_MODE_RESULTS = "application/vnd.ga5.invoice-action-results+json"
