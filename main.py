@@ -118,13 +118,21 @@ def error_response(status_code: int, code: str, message: str) -> JSONResponse:
 # ---------------------------------------------------------------------------
 # Protocol & Auth Helpers
 # ---------------------------------------------------------------------------
+
 def extract_principal(authorization: Optional[str]) -> Optional[str]:
-    if not authorization:
+    if not authorization or not A2A_AUTH_TOKEN:
         return None
+
     parts = authorization.split(" ", 1)
-    if len(parts) != 2 or parts[0] != "Bearer" or not parts[1].strip():
+    if len(parts) != 2 or parts[0] != "Bearer":
         return None
-    return parts[1].strip()
+
+    token = parts[1].strip()
+    if not token or not secrets.compare_digest(token, A2A_AUTH_TOKEN):
+        return None
+
+    return "authenticated-client"
+
 
 
 def check_version_and_media_type(
