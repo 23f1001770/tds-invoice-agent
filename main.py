@@ -388,7 +388,7 @@ async def get_agent_card(request: Request):
 # ---------------------------------------------------------------------------
 # 2. POST {base}/message:send
 # ---------------------------------------------------------------------------
-@app.post("/a2a/message:send")
+@app.post("/message:send")
 async def message_send(
     request: Request,
     authorization: Optional[str] = Header(None),
@@ -693,7 +693,7 @@ async def message_send(
 # ---------------------------------------------------------------------------
 # 3. GET {base}/tasks/{id}
 # ---------------------------------------------------------------------------
-@app.get("/a2a/tasks/{task_id}")
+@app.get("/tasks/{task_id}")
 async def get_task(
     task_id: str,
     authorization: Optional[str] = Header(None),
@@ -723,7 +723,7 @@ async def get_task(
 # ---------------------------------------------------------------------------
 # 4. GET {base}/tasks
 # ---------------------------------------------------------------------------
-@app.get("/a2a/tasks")
+@app.get("/tasks")
 async def list_tasks(
     authorization: Optional[str] = Header(None),
     a2a_version: Optional[str] = Header(None, alias="A2A-Version"),
@@ -749,7 +749,7 @@ async def list_tasks(
 # ---------------------------------------------------------------------------
 # 5. POST {base}/tasks/{id}:cancel
 # ---------------------------------------------------------------------------
-@app.post("/a2a/tasks/{task_id}:cancel")
+@app.post("/tasks/{task_id}:cancel")
 async def cancel_task(
     task_id: str,
     authorization: Optional[str] = Header(None),
