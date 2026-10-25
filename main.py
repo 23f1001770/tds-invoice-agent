@@ -149,10 +149,21 @@ def gemini_generate(packages, batch_id, policy_revision):
             result.append({"packageId":pid,"actionId":new_id("action"),"action":action,"facts":facts,"evidenceRefs":refs,"rationale":rationale})
         if seen != set(by_id): raise ValueError("Missing package proposals")
         return result
-    except HTTPException: raise
+    except HTTPException:
+        raise
     except Exception as exc:
-        # Never expose model prompts, keys, or provider internals to callers.
-        raise HTTPException(502, detail={"code":"AI_DECISION_FAILED","message":"Could not create a validated proposal batch. Check server logs and model configuration."}) from exc
+        import logging
+        logging.exception(
+            "Gemini proposal generation failed: %s",
+            type(exc).__name__,
+        )
+        raise HTTPException(
+            502,
+            detail={
+                "code": "AI_DECISION_FAILED",
+                "message": "Could not create a validated proposal batch. Check server logs and model configuration.",
+            },
+        ) from exc
 
 
 def get_or_make_proposals(packages, batch_id, policy_revision):
